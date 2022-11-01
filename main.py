@@ -42,7 +42,7 @@ def quote(symbol):
                 dictionary = {
                     "currency": i["currency"],
                     "shortMarket": i["exchange"],
-                    "marke": i["fullExchangeName"],
+                    "market": i["fullExchangeName"],
                     "shortName": i["shortName"],
                     "name": i["longName"],
                     "price": i["regularMarketPrice"],
