@@ -15,7 +15,7 @@ Write your api key from Yahoo finance inside apiKJey.json
 
 ### Url
 ```
-http://127.0.0.1:5000/quote/AEEM.PA
+[GET] http://127.0.0.1:5000/quote/<symbol>
 ```
 ### Response Example
 
@@ -30,7 +30,9 @@ http://127.0.0.1:5000/quote/AEEM.PA
   "symbol": "AEEM.PA"
 }
 ```
-
+### Error codes
+- 429 - not enough resquests avaliable for you API account
+- 404 - symbol not found
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

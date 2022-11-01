@@ -7,11 +7,11 @@ from flask import Response
 app = Flask(__name__)
 
 
-@app.route("/quote/<simbolo>", methods=['GET'])
-def quote(simbolo):
+@app.route("/quote/<symbol>", methods=['GET'])
+def quote(symbol):
     url = "https://yfapi.net/v6/finance/quote"
     querystring = {
-        "symbols": simbolo,
+        "symbols": symbol,
         "region": "PT",
         "lang": "en"
     }
@@ -30,30 +30,30 @@ def quote(simbolo):
     jsonSTR = response.content
     data = json.loads(jsonSTR)
     if data["message"] == "Limit Exceeded":
-        r = Response(response='Limite diário de pedidos excedido', status=429, mimetype="application/json")
-        print(429, 'Limite diário de pedidos excedido')
+        r = Response(response='Daily request limit reached', status=429, mimetype="application/json")
+        print(429, 'Daily request limit reached')
         return r
     else:
         quote = data["quoteResponse"]
-        resultado = quote["result"]
-        if len(resultado) > 0:
+        result = quote["result"]
+        if len(result) > 0:
             dictionary = {}
-            for i in resultado:
+            for i in result:
                 dictionary = {
-                    "moeda": i["currency"],
-                    "abreviaturaBolsa": i["exchange"],
-                    "nomeBolsa": i["fullExchangeName"],
-                    "abreviaturaNome": i["shortName"],
-                    "nome": i["longName"],
-                    "preco": i["regularMarketPrice"],
-                    "simbolo": i["symbol"]
+                    "currency": i["currency"],
+                    "shortMarket": i["exchange"],
+                    "marke": i["fullExchangeName"],
+                    "shortName": i["shortName"],
+                    "name": i["longName"],
+                    "price": i["regularMarketPrice"],
+                    "symbol": i["symbol"]
                 }
             json_object = json.dumps(dictionary, indent=4)
             r = Response(response=json_object, status=200, mimetype="application/json")
             return r
         else:
-            print(404, "Simbolo não encontrado")
-            r = Response(response="Simbolo não encontrado", status=404, mimetype="application/json")
+            print(404, "Symbol not found")
+            r = Response(response="Symbol not found", status=404, mimetype="application/json")
             return r
 
 
