@@ -29,7 +29,7 @@ def quote(symbol):
     response = requests.request("GET", url, headers=headers, params=querystring)
     jsonSTR = response.content
     data = json.loads(jsonSTR)
-    if data["message"] == "Limit Exceeded":
+    if "message" in data:
         r = Response(response='Daily request limit reached', status=429, mimetype="application/json")
         print(429, 'Daily request limit reached')
         return r
